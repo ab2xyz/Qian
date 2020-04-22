@@ -14,6 +14,12 @@ from scipy.signal import savgol_filter
 from skpy import Skype
 from getpass import getpass
 
+from symbolDict import symbolDict
+
+# symbolDict={'brent':'BZM20.NYM','wti':'CLM20.NYM','gold':'GC=F','silver':'SI=F'}
+# symbolDict={'brent':'BZ=F','wti':'CL=F','gold':'GC=F','silver':'SI=F'}
+
+
 
 def DataGet(update=0,symbol='brent'):
     os.makedirs(folder+'DataPredictionLong',exist_ok=True)
@@ -21,23 +27,23 @@ def DataGet(update=0,symbol='brent'):
         return
 
     if symbol=='brent':
-        dataYahooBrent =  data.DataReader(name = 'BZM20.NYM',data_source = 'yahoo', start='1900-01-01')  # Brent     2020-01-03
+        dataYahooBrent =  data.DataReader(name = symbolDict[symbol],data_source = 'yahoo', start='1900-01-01')  # Brent     2020-01-03
         dataYahooBrent.to_csv(folder+'DataPredictionLong/dataYahooOilBrent.csv')
 
     if symbol=='wti':
 
         # WTI    2000-03-02
-        dataYahooWTI =  data.DataReader(name = 'CLM20.NYM',data_source = 'yahoo', start='1900-01-01')  # WTI    2000-03-02
+        dataYahooWTI =  data.DataReader(name = symbolDict[symbol],data_source = 'yahoo', start='1900-01-01')  # WTI    2000-03-02
         dataYahooWTI.to_csv(folder+'DataPredictionLong/dataYahooOilWTI.csv')
 
     if symbol=='gold':
         # Gold    2000-02-28
-        dataYahooGold =  data.DataReader(name = 'GC=F',data_source = 'yahoo', start='1900-01-01')  # Gold    2000-02-28
+        dataYahooGold =  data.DataReader(name = symbolDict[symbol],data_source = 'yahoo', start='1900-01-01')  # Gold    2000-02-28
         dataYahooGold.to_csv(folder+'DataPredictionLong/dataYahooGold.csv')
 
     if symbol=='silver':
         # Silver    2000-02-28
-        dataYahooSilver =  data.DataReader(name = 'SI=F',data_source = 'yahoo', start='1900-01-01')  # Silver    2000-02-28
+        dataYahooSilver =  data.DataReader(name = symbolDict[symbol],data_source = 'yahoo', start='1900-01-01')  # Silver    2000-02-28
         dataYahooSilver.to_csv(folder+'DataPredictionLong/dataYahooSilver.csv')
 
 
@@ -329,7 +335,7 @@ os.makedirs(folder,exist_ok=True)
 
 
 flagInterplate=0
-cols=['Open','Adj Close']
+cols=['Open','High','Low','Adj Close']
 for symbol in ['gold','silver','wti','brent']:
 
 

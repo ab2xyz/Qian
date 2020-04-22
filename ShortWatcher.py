@@ -13,6 +13,8 @@ import numpy as np
 from skpy import Skype
 from getpass import getpass
 
+from symbolDict import symbolDict
+
 numItemSend=10
 deltaTSecond=1
 
@@ -26,20 +28,8 @@ os.makedirs(folder,exist_ok=True)
 
 
 def DataRealTimeGet(symbol='wti'):
-    if symbol=='wti':
-        sym='CLM20.NYM'
+    sym=symbolDict[symbol]
 
-    if symbol=='brent':
-        sym='BZM20.NYM'
-
-    if symbol=='gold':
-        sym='GC=F'
-
-    if symbol=='silver':
-        sym='SI=F'
-
-    if symbol=='rmb':
-        sym='CNH=F'
 
     price=data.get_quote_yahoo(sym).price.values[0]
 

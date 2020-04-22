@@ -4,16 +4,14 @@
 
 
 import datetime
-import pandas as pd
+# import pandas as pd
 import os
 from pandas_datareader import data
+import numpy as np
 
+# symbolDict={'wti':'CLM20.NYM','brent':'BZM20.NYM','gold':'GC=F','silver':'SI=F'}
 
-symbols={'wti':'CLM20.NYM','brent':'BZM20.NYM','gold':'GC=F','silver':'SI=F'}
-
-
-
-
+from symbolDict import symbolDict
 
 '''
 */1 * * * * /home/i/Qian/code/RecordData.py
@@ -34,16 +32,17 @@ os.makedirs(dataFolder,exist_ok=True)
 
 t0=datetime.datetime(2020,4,22,0,0,0)
 
-for symbol in symbols:
-    sym=symbols[symbol]
+for symbol in symbolDict:
+    sym=symbolDict[symbol]
+
     price=data.get_quote_yahoo(sym).price.values[0]
 
-    iCSV=dataFolder+symbol+'.csv'
+    iDat=dataFolder+symbol+'.dat'
 
     try:
-        dataCSV=pd.read_csv(iCSV)
+        dat=np.loadtxt(iDat)
     except :
-        dataCSV=pd.DataFrame(columns=list(range(1440)))
+        dat=np.zeros((365,1440))
 
     t=datetime.datetime.now()
     dT=(t-t0).seconds//60
@@ -51,12 +50,11 @@ for symbol in symbols:
     iRow=dT//1440
     iCol=dT % 1440
 
-    print(iRow,iCol)
-    dataCSV.loc[iRow,iCol]=price
 
-    print(dataCSV)
+    dat[iRow,iCol]=price
 
-    dataCSV.to_csv(iCSV)
+    np.savetxt(iDat,dat,fmt='%.3f',)
+
 
 
 
