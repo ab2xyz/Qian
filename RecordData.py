@@ -12,6 +12,9 @@ from pandas_datareader import data
 symbols={'wti':'CLM20.NYM','brent':'BZM20.NYM','gold':'GC=F','silver':'SI=F'}
 
 
+
+
+
 '''
 */1 * * * * /home/i/Qian/code/RecordData.py
 '''
@@ -29,7 +32,7 @@ dataFolder=folder+'dataRecord/'
 os.makedirs(dataFolder,exist_ok=True)
 
 
-t0=datetime.datetime(2020,4,20,0,0,0)
+t0=datetime.datetime(2020,4,22,0,0,0)
 
 for symbol in symbols:
     sym=symbols[symbol]
@@ -53,7 +56,7 @@ for symbol in symbols:
 
     print(dataCSV)
 
-    dataCSV.to_csv(iCSV,index=False)
+    dataCSV.to_csv(iCSV)
 
 
 
